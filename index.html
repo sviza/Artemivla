@@ -86,6 +86,7 @@
             max-width: 1100px;
             margin: 0 auto;
             padding: 80px 20px;
+            overflow: hidden; /* Importante para el carrusel infinito */
         }
 
         section {
@@ -166,24 +167,44 @@
         @keyframes typing { from { width: 0 } to { width: 100%; } }
         @keyframes blink { 50% { border-color: transparent } }
 
-        /* --- 6. TARJETAS DE PDF (AUTOMÁTICAS) --- */
-        .carousel-container {
+        /* --- 6. CARRUSEL AUTOMÁTICO (INFINITE MARQUEE) --- */
+        
+        /* Contenedor que oculta lo que se sale de la pantalla */
+        .carousel-view {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+
+        /* La pista que se mueve */
+        .carousel-track {
             display: flex;
             gap: 30px;
-            overflow-x: auto;
-            padding: 20px 10px 50px 10px;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none;
+            width: max-content; /* Se ajusta al contenido total */
+            /* Animación: se mueve la mitad de su tamaño (porque duplicamos items) */
+            /* Ajusta '30s' para hacerlo más rápido o más lento */
+            animation: scroll 30s linear infinite; 
         }
-        .carousel-container::-webkit-scrollbar { display: none; }
 
+        /* Detener animación al pasar el mouse */
+        .carousel-track:hover {
+            animation-play-state: paused;
+        }
+
+        /* Definición del movimiento */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            /* Calculo: (Ancho Tarjeta 340px + Gap 30px) * 4 tarjetas originales = -1480px */
+            100% { transform: translateX(-1480px); } 
+        }
+
+        /* Tarjeta */
         .project-card {
-            flex: 0 0 340px; /* Un poco más ancho para que se vea bien el PDF */
+            flex: 0 0 340px; /* Ancho fijo */
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 24px;
             overflow: hidden;
-            scroll-snap-align: center;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -193,29 +214,27 @@
             transform: translateY(-10px);
             border-color: var(--primary);
             box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.2);
+            z-index: 10; /* Que se superponga al hacer hover */
         }
 
-        /* CONTENEDOR DEL PDF INCRUSTADO */
+        /* PREVIEW PDF */
         .card-preview {
-            height: 220px; /* Altura de la vista previa */
+            height: 220px; 
             width: 100%;
             position: relative;
-            overflow: hidden; /* Corta las barras de scroll del PDF */
-            background-color: #eee; /* Fondo gris mientras carga */
+            overflow: hidden; 
+            background-color: #eee; 
             border-bottom: 1px solid var(--border-color);
         }
 
-        /* ESTILO DEL EMBED (EL PDF AUTOMÁTICO) */
         .pdf-embed {
             width: 100%;
             height: 100%; 
             object-fit: cover;
-            /* Estos filtros ayudan a que se vea integrado */
-            pointer-events: none; /* TRUCO CLAVE: Evita que interactúes con el PDF, lo hace parecer imagen */
-            transform: scale(1.05); /* Pequeño zoom para ocultar bordes blancos del PDF */
+            pointer-events: none; /* TRUCO: Evita interacción para que el scroll funcione */
+            transform: scale(1.05);
         }
 
-        /* Sombra encima del PDF para integrarlo */
         .card-preview::after {
             content: '';
             position: absolute;
@@ -309,9 +328,10 @@
         @media (max-width: 768px) {
             h1 { font-size: 2.2rem; }
             .nav-link { padding: 8px 16px; font-size: 0.85rem; }
-            .project-card { flex: 0 0 85%; }
             .section-title { font-size: 1.5rem; }
             .typing-text { animation: none; width: auto; border: none; white-space: normal; }
+            /* Ajuste animación móvil */
+            .carousel-track { animation-duration: 20s; }
         }
     </style>
 </head>
@@ -332,8 +352,8 @@
             <h1>Wladimir Aldo Carlosviza</h1>
             <div class="role">Ingeniería Estadística e Informática | Data Science</div>
             <p class="bio">
-                Estudiante de noveno semestre (Décimo Superior). [cite_start]Ganador de la Beca Permanencia 2023[cite: 11, 63]. 
-                [cite_start]Apasionado por transformar datos en soluciones innovadoras mediante Machine Learning y Desarrollo Web[cite: 6, 7].
+                Estudiante de noveno semestre (Décimo Superior). Ganador de la Beca Permanencia 2023[cite: 11, 63]. 
+                Apasionado por transformar datos en soluciones innovadoras mediante Machine Learning y Desarrollo Web[cite: 6, 7].
             </p>
             <div class="social-icons">
                 <a href="mailto:wcarlosviza@est.unap.edu.pe"><i class="fas fa-envelope"></i></a>
@@ -346,69 +366,134 @@
                 <i class="fas fa-folder-open"></i>
                 <h2 class="typing-text">Entregables del Curso</h2>
             </div>
+            <p style="color:var(--text-muted); margin-bottom:20px; font-size:0.9rem;">
+                <i class="fas fa-mouse"></i> Pasa el mouse sobre una tarjeta para detener el carrusel y descargar.
+            </p>
             
-            <div class="carousel-container">
-                
-                <div class="project-card">
-                    <div class="card-preview">
-                        <embed src="trabajo/1.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+            <div class="carousel-view">
+                <div class="carousel-track">
+                    
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/heartprex.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">HeartPrex AI</div>
+                            <p class="card-text">
+                                Software para detección de enfermedades cardíacas usando Machine Learning. Precisión del 85%. Registrado en INDECOPI[cite: 35, 36].
+                            </p>
+                            <a href="trabajos/heartprex.pdf" target="_blank" class="btn-download">
+                                <i class="fas fa-file-pdf"></i> Ver Documento
+                            </a>
+                        </div>
                     </div>
-                    <div class="card-content">
-                        <div class="card-title">HeartPrex AI</div>
-                        <p class="card-text">
-                            Software para detección de enfermedades cardíacas usando Machine Learning. Precisión del 85%. [cite_start]Registrado en INDECOPI[cite: 35, 36].
-                        </p>
-                        <a href="trabajo/1.pdf" target="_blank" class="btn-download">
-                            <i class="fas fa-file-pdf"></i> Ver Documento
-                        </a>
-                    </div>
-                </div>
 
-                <div class="project-card">
-                    <div class="card-preview">
-                        <embed src="trabajos/mailscanner.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/mailscanner.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">MailScannerX</div>
+                            <p class="card-text">
+                                Herramienta anti-spam desarrollada con JavaScript y SQL. Optimización de gestión de emails en un 20%[cite: 41, 42].
+                            </p>
+                            <a href="trabajos/mailscanner.pdf" target="_blank" class="btn-download">
+                                <i class="fas fa-file-pdf"></i> Ver Documento
+                            </a>
+                        </div>
                     </div>
-                    <div class="card-content">
-                        <div class="card-title">MailScannerX</div>
-                        <p class="card-text">
-                            Herramienta anti-spam desarrollada con JavaScript y SQL. [cite_start]Optimización de gestión de emails en un 20%[cite: 41, 42].
-                        </p>
-                        <a href="trabajos/mailscanner.pdf" target="_blank" class="btn-download">
-                            <i class="fas fa-file-pdf"></i> Ver Documento
-                        </a>
-                    </div>
-                </div>
 
-                <div class="project-card">
-                    <div class="card-preview">
-                        <embed src="trabajos/calidad.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/calidad.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">Control de Calidad</div>
+                            <p class="card-text">
+                                App web (Flask) para análisis estadístico. Visualización de índices Cp y Cpk[cite: 28, 29].
+                            </p>
+                            <a href="trabajos/calidad.pdf" target="_blank" class="btn-download">
+                                <i class="fas fa-file-pdf"></i> Ver Documento
+                            </a>
+                        </div>
                     </div>
-                    <div class="card-content">
-                        <div class="card-title">Control de Calidad</div>
-                        <p class="card-text">
-                            App web (Flask) para análisis estadístico. [cite_start]Visualización de índices Cp y Cpk para toma de decisiones[cite: 28, 29].
-                        </p>
-                        <a href="trabajos/calidad.pdf" target="_blank" class="btn-download">
-                            <i class="fas fa-file-pdf"></i> Ver Documento
-                        </a>
-                    </div>
-                </div>
 
-                <div class="project-card">
-                    <div class="card-preview">
-                        <embed src="trabajos/chocolate.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/chocolate.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">Evaluación Sensorial</div>
+                            <p class="card-text">
+                                Plataforma para análisis de chocolate. Uso de algoritmos ML para datos sensoriales[cite: 20, 21].
+                            </p>
+                            <a href="trabajos/chocolate.pdf" target="_blank" class="btn-download">
+                                <i class="fas fa-file-pdf"></i> Ver Documento
+                            </a>
+                        </div>
                     </div>
-                    <div class="card-content">
-                        <div class="card-title">Evaluación Sensorial</div>
-                        <p class="card-text">
-                            Plataforma para análisis de chocolate. [cite_start]Uso de algoritmos ML para datos sensoriales[cite: 20, 21].
-                        </p>
-                        <a href="trabajos/chocolate.pdf" target="_blank" class="btn-download">
-                            <i class="fas fa-file-pdf"></i> Ver Documento
-                        </a>
-                    </div>
-                </div>
 
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/heartprex.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">HeartPrex AI</div>
+                            <p class="card-text">
+                                Software para detección de enfermedades cardíacas usando Machine Learning. Precisión del 85%. Registrado en INDECOPI[cite: 35, 36].
+                            </p>
+                            <a href="trabajos/heartprex.pdf" target="_blank" class="btn-download">
+                                <i class="fas fa-file-pdf"></i> Ver Documento
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/mailscanner.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">MailScannerX</div>
+                            <p class="card-text">
+                                Herramienta anti-spam desarrollada con JavaScript y SQL. Optimización de gestión de emails en un 20%[cite: 41, 42].
+                            </p>
+                            <a href="trabajos/mailscanner.pdf" target="_blank" class="btn-download">
+                                <i class="fas fa-file-pdf"></i> Ver Documento
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/calidad.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">Control de Calidad</div>
+                            <p class="card-text">
+                                App web (Flask) para análisis estadístico. Visualización de índices Cp y Cpk[cite: 28, 29].
+                            </p>
+                            <a href="trabajos/calidad.pdf" target="_blank" class="btn-download">
+                                <i class="fas fa-file-pdf"></i> Ver Documento
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/chocolate.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-title">Evaluación Sensorial</div>
+                            <p class="card-text">
+                                Plataforma para análisis de chocolate. Uso de algoritmos ML para datos sensoriales[cite: 20, 21].
+                            </p>
+                            <a href="trabajos/chocolate.pdf" target="_blank" class="btn-download">
+                                <i class="fas fa-file-pdf"></i> Ver Documento
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </section>
 
@@ -424,7 +509,7 @@
                     <div class="timeline-role">Investigador de Proyecto</div>
                     <span class="timeline-date">Marzo 2024 - Septiembre 2024</span>
                     <p class="timeline-desc">
-                        Universidad Nacional del Altiplano. [cite_start]Desarrollo de plataforma web y análisis de datos para evaluación sensorial de chocolate[cite: 16, 20].
+                        Universidad Nacional del Altiplano. Desarrollo de plataforma web y análisis de datos para evaluación sensorial de chocolate[cite: 16, 20].
                     </p>
                 </div>
 
@@ -432,7 +517,7 @@
                     <div class="timeline-role">Desarrollador de Software</div>
                     <span class="timeline-date">2023</span>
                     <p class="timeline-desc">
-                        Creación de "HeartPrex" y "MailScannerX". [cite_start]Ambos softwares obtuvieron registro en INDECOPI por innovación tecnológica[cite: 31, 37].
+                        Creación de "HeartPrex" y "MailScannerX". Ambos softwares obtuvieron registro en INDECOPI por innovación tecnológica[cite: 31, 37].
                     </p>
                 </div>
 
@@ -440,7 +525,7 @@
                     <div class="timeline-role">Beca Permanencia</div>
                     <span class="timeline-date">Junio 2023</span>
                     <p class="timeline-desc">
-                        [cite_start]Otorgada por PRONABEC en reconocimiento al alto rendimiento académico (Décimo Superior) en Ingeniería Estadística[cite: 11, 63].
+                        Otorgada por PRONABEC en reconocimiento al alto rendimiento académico (Décimo Superior) en Ingeniería Estadística[cite: 11, 63].
                     </p>
                 </div>
 
