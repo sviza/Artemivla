@@ -3,252 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio - Wladimir Carlosviza</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Portafolio | Wladimir Carlosviza</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 1. CONFIGURACIÓN BASE (DARK MODE) --- */
+        /* --- 1. VARIABLES Y BASE --- */
         :root {
-            --bg-color: #0b1120;       /* Fondo oscuro profundo */
-            --nav-bg: #111827;         /* Fondo barra navegación */
-            --card-bg: #1e293b;        /* Fondo tarjetas */
-            --text-main: #94a3b8;      /* Texto gris claro */
-            --text-light: #f8fafc;     /* Texto blanco títulos */
-            --accent: #2563eb;         /* Azul brillante (Botón activo) */
-            --accent-hover: #1d4ed8;
-            --green-dot: #10b981;      /* Verde para la línea de tiempo */
+            --bg-body: #09090b;       /* Fondo casi negro */
+            --bg-card: #18181b;       /* Fondo tarjetas */
+            --primary: #2563eb;       /* Azul brillante (Botón activo) */
+            --secondary: #10b981;     /* Verde (Trayectoria) */
+            --text-main: #e4e4e7;     /* Texto claro */
+            --text-muted: #a1a1aa;    /* Texto gris */
+            --border-color: #27272a;  /* Bordes sutiles */
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            scroll-behavior: smooth; /* Desplazamiento suave al hacer clic */
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
             color: var(--text-main);
             line-height: 1.6;
+            background-image: radial-gradient(circle at 50% 0%, #1e1b4b 0%, transparent 40%); /* Luz sutil arriba */
         }
 
-        /* --- 2. BARRA DE NAVEGACIÓN (TIPO PESTAÑAS) --- */
+        /* --- 2. NAVBAR TIPO PESTAÑA (Ref Imagen 1) --- */
         nav {
-            background-color: var(--nav-bg);
-            padding: 15px 0;
             position: sticky;
-            top: 0;
+            top: 20px;
             z-index: 1000;
-            border-bottom: 1px solid #1f2937;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            padding: 0 20px;
         }
 
         .nav-container {
-            display: inline-flex;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 5px;
-            border-radius: 8px;
+            background: rgba(24, 24, 27, 0.8);
+            backdrop-filter: blur(10px); /* Efecto vidrio */
+            padding: 8px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 5px;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
         }
 
         .nav-link {
             text-decoration: none;
-            color: #9ca3af;
-            font-weight: 600;
-            padding: 8px 20px;
-            border-radius: 6px;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 8px 24px;
+            border-radius: 40px;
             transition: all 0.3s ease;
-            font-size: 0.95rem;
         }
 
         .nav-link:hover {
-            color: #fff;
-            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            background: rgba(255,255,255,0.05);
         }
 
-        /* Efecto "Activo" o Pestaña seleccionada (Simulado con :target o clase manual) */
-        .nav-link.active-tab {
-            background-color: var(--accent);
-            color: #fff;
-            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.4);
+        /* ESTILO DEL BOTÓN ACTIVO (AZUL) */
+        .nav-link.active {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+            font-weight: 600;
         }
 
-        /* --- 3. ESTRUCTURA PRINCIPAL --- */
-        .container {
+        /* --- 3. CONTENEDOR PRINCIPAL --- */
+        .main-container {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 60px 20px;
         }
 
         section {
-            padding: 60px 0;
-            border-bottom: 1px solid #1f2937;
+            margin-bottom: 100px;
+            padding-top: 20px; /* Offset para el scroll */
         }
 
-        h1 {
-            color: var(--text-light);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+        /* --- 4. PERFIL / HERO --- */
+        .profile-header {
             text-align: center;
         }
 
-        .subtitle {
-            color: #38bdf8;
-            text-align: center;
-            font-size: 1.2rem;
-            margin-bottom: 30px;
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            padding: 3px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(37, 99, 235, 0.2);
         }
 
-        h2 {
-            color: var(--text-light);
-            font-size: 2rem;
-            margin-bottom: 30px;
+        h1 { font-size: 2.5rem; font-weight: 700; letter-spacing: -1px; }
+        .role { color: var(--primary); font-size: 1.1rem; font-weight: 500; margin-bottom: 15px; }
+        .bio { color: var(--text-muted); max-width: 600px; margin: 0 auto 30px; }
+
+        .social-icons a {
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: 0.3s;
+        }
+        .social-icons a:hover { color: white; transform: translateY(-3px); display: inline-block; }
+
+        /* --- 5. CARRUSEL DE PROYECTOS (ESTILO TARJETA) --- */
+        /* Animación de fondo para la "Vista Previa" */
+        @keyframes gradient-move {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
-        
-        h2 i { color: var(--accent); }
+        .section-title i { color: var(--primary); }
 
-        /* --- 4. CARRUSEL PURO CSS (SLIDER) --- */
-        .carousel-wrapper {
-            position: relative;
-            width: 100%;
-        }
-
+        /* Contenedor Scroll Horizontal */
         .carousel-container {
             display: flex;
+            gap: 25px;
             overflow-x: auto;
+            padding: 20px 5px 40px 5px; /* Padding abajo para la sombra */
             scroll-snap-type: x mandatory;
-            gap: 20px;
-            padding-bottom: 20px;
-            /* Ocultar barra de scroll estándar */
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent) var(--bg-color);
+            scrollbar-width: none; /* Firefox */
+        }
+        .carousel-container::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+        /* DISEÑO DE LA TARJETA (CONTENEDOR ESTILIZADO) */
+        .project-card {
+            flex: 0 0 300px; /* Ancho fijo */
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            scroll-snap-align: center;
+            transition: all 0.4s ease;
+            position: relative;
         }
 
-        /* Estilo barra scroll para Chrome/Safari */
-        .carousel-container::-webkit-scrollbar {
-            height: 8px;
-        }
-        .carousel-container::-webkit-scrollbar-track {
-            background: var(--bg-color);
-        }
-        .carousel-container::-webkit-scrollbar-thumb {
-            background-color: var(--accent);
-            border-radius: 10px;
+        /* Efecto Hover en la tarjeta */
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.6);
         }
 
-        .carousel-card {
-            flex: 0 0 320px; /* Ancho fijo de cada tarjeta */
-            background-color: var(--card-bg);
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid #334155;
-            scroll-snap-align: center; /* Alineación perfecta al soltar */
-            transition: transform 0.3s ease;
+        /* Vista Previa Animada (Parte superior de la tarjeta) */
+        .card-preview {
+            height: 160px;
+            width: 100%;
+            /* Gradiente animado que simula movimiento */
+            background: linear-gradient(-45deg, #1e1b4b, #312e81, #1e3a8a, #0f172a);
+            background-size: 400% 400%;
+            animation: gradient-move 10s ease infinite;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
 
-        .carousel-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
+        .preview-icon {
+            font-size: 3rem;
+            color: rgba(255,255,255,0.8);
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+            transition: transform 0.4s;
+        }
+        
+        .project-card:hover .preview-icon {
+            transform: scale(1.1);
         }
 
-        .card-icon {
-            font-size: 2.5rem;
-            color: var(--accent);
-            margin-bottom: 15px;
-        }
+        .card-content { padding: 25px; }
 
         .card-title {
-            color: var(--text-light);
             font-size: 1.2rem;
-            margin-bottom: 10px;
             font-weight: 700;
-        }
-
-        .card-desc {
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-            color: #cbd5e1;
-        }
-
-        .btn-pdf {
-            display: inline-block;
-            text-decoration: none;
-            background-color: transparent;
-            color: var(--accent);
-            border: 1px solid var(--accent);
-            padding: 8px 15px;
-            border-radius: 6px;
-            text-align: center;
-            font-weight: 600;
-            transition: 0.3s;
-            margin-top: auto; /* Empuja el botón al fondo */
-        }
-
-        .btn-pdf:hover {
-            background-color: var(--accent);
+            margin-bottom: 10px;
             color: white;
         }
 
-        /* --- 5. TRAYECTORIA (TIMELINE VERTICAL) --- */
-        .timeline {
-            position: relative;
+        .card-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .btn-download {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-download:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+        }
+
+        /* --- 6. TRAYECTORIA (TIMELINE) (Ref Imagen 2) --- */
+        .timeline-container {
             padding-left: 20px;
-            margin-top: 20px;
+            border-left: 2px solid #27272a;
         }
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 10px; bottom: 0;
-            width: 2px;
-            background-color: #334155;
-        }
+
         .timeline-item {
             position: relative;
-            padding-left: 30px;
-            margin-bottom: 40px;
+            padding-left: 40px;
+            margin-bottom: 50px;
         }
-        .timeline-item::after {
+
+        /* El punto verde */
+        .timeline-item::before {
             content: '';
             position: absolute;
-            left: -6px; top: 5px;
-            width: 14px; height: 14px;
+            left: -9px; /* Centrado en la línea */
+            top: 0;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
-            background-color: var(--green-dot);
-            border: 3px solid var(--bg-color);
-            box-shadow: 0 0 0 1px var(--green-dot);
+            background-color: var(--bg-body); /* Centro oscuro */
+            border: 4px solid var(--secondary); /* Borde verde */
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); /* Brillo verde */
         }
-        .role { color: #34d399; font-weight: 700; font-size: 1.1rem; }
-        .date { font-size: 0.85rem; color: #64748b; margin-bottom: 10px; display: block;}
 
-        /* --- 6. HABILIDADES --- */
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
+        .timeline-role {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
         }
-        .skill-tag {
-            background: var(--card-bg);
-            color: #38bdf8;
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: 1px solid #334155;
+
+        .timeline-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timeline-desc {
+            color: var(--text-muted);
+        }
+
+        /* --- 7. FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
             font-size: 0.9rem;
         }
 
-        /* RESPONSIVE */
+        /* Responsive */
         @media (max-width: 600px) {
-            h1 { font-size: 1.8rem; }
-            .carousel-card { flex: 0 0 85%; } /* En celular ocupan casi todo el ancho */
-            .nav-link { padding: 8px 10px; font-size: 0.8rem; }
+            h1 { font-size: 2rem; }
+            .nav-link { padding: 8px 15px; font-size: 0.8rem; }
+            .project-card { flex: 0 0 85%; }
         }
     </style>
 </head>
@@ -256,123 +294,159 @@
 
     <nav>
         <div class="nav-container">
-            <a href="#inicio" class="nav-link active-tab">Sobre Mí</a>
-            <a href="#proyectos" class="nav-link">Proyectos (Carrusel)</a>
+            <a href="#sobre-mi" class="nav-link active">Sobre Mí</a>
+            <a href="#proyectos" class="nav-link">Trabajos</a>
             <a href="#trayectoria" class="nav-link">Trayectoria</a>
-            <a href="#contacto" class="nav-link">Contacto</a>
         </div>
     </nav>
 
-    <div class="container">
+    <div class="main-container">
 
-        <section id="inicio">
-            <h1>Wladimir Aldo Carlosviza Amanqui</h1>
-            <div class="subtitle">Ingeniería Estadística e Informática | Data Science & Dev</div>
-            
-            <p style="text-align: center; max-width: 700px; margin: 0 auto;">
-                Estudiante de noveno semestre (Décimo Superior) en la UNA Puno. Especializado en Ciencia de Datos, 
-                Desarrollo de Software y Análisis Estadístico. Ganador de la Beca Permanencia Pronabec 2023.
+        <section id="sobre-mi" class="profile-header">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Wladimir" class="profile-img">
+            <h1>Wladimir Aldo Carlosviza</h1>
+            <div class="role">Ingeniería Estadística e Informática | Data Science</div>
+            <p class="bio">
+                Estudiante de noveno semestre (Décimo Superior). Ganador de la Beca Permanencia 2023. 
+                Apasionado por transformar datos en soluciones innovadoras mediante Machine Learning y Desarrollo Web.
             </p>
+            <div class="social-icons">
+                <a href="mailto:wcarlosviza@est.unap.edu.pe"><i class="fas fa-envelope"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
         </section>
 
         <section id="proyectos">
-            <h2><i class="fas fa-layer-group"></i> Proyectos Destacados (Desliza →)</h2>
-            <p style="margin-bottom: 20px; font-size: 0.9rem; color: #64748b;">
-                <i class="fas fa-info-circle"></i> Desliza horizontalmente para ver más trabajos.
+            <h2 class="section-title"><i class="fas fa-folder-open"></i> Entregables del Curso</h2>
+            <p style="color:var(--text-muted); margin-bottom:20px; font-size:0.9rem;">
+                <i class="fas fa-hand-pointer"></i> Desliza horizontalmente para ver todos los trabajos.
             </p>
 
-            <div class="carousel-wrapper">
-                <div class="carousel-container">
-                    
-                    <div class="carousel-card">
-                        <i class="fas fa-heartbeat card-icon"></i>
-                        <div class="card-title">HeartPrex (AI Salud)</div>
-                        <div class="card-desc">
-                            Software para detección de enfermedades cardíacas usando Machine Learning (Python). 
-                            <strong>Precisión del 85%</strong>. Registrado en INDECOPI.
-                        </div>
-                        <a href="trabajos/heartprex.pdf" target="_blank" class="btn-pdf">
-                            <i class="fas fa-file-pdf"></i> Ver Documentación
+            <div class="carousel-container">
+                
+                <div class="project-card">
+                    <div class="card-preview">
+                        <i class="fas fa-brain preview-icon"></i>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">HeartPrex AI</div>
+                        <p class="card-text">
+                            Software de detección de enfermedades cardíacas (Python). Precisión del 85%. Registrado en INDECOPI.
+                        </p>
+                        <a href="trabajos/heartprex.pdf" target="_blank" class="btn-download">
+                            <i class="fas fa-file-pdf"></i> Ver PDF
                         </a>
                     </div>
-
-                    <div class="carousel-card">
-                        <i class="fas fa-shield-alt card-icon" style="color: #f59e0b;"></i>
-                        <div class="card-title">MailScannerX</div>
-                        <div class="card-desc">
-                            Herramienta de análisis de correos no deseados (Spam) desarrollada con JS y SQL. 
-                            Optimización de gestión de emails en un 20%.
-                        </div>
-                        <a href="trabajos/mailscanner.pdf" target="_blank" class="btn-pdf">
-                            <i class="fas fa-file-pdf"></i> Ver Documentación
-                        </a>
-                    </div>
-
-                    <div class="carousel-card">
-                        <i class="fas fa-chart-line card-icon" style="color: #10b981;"></i>
-                        <div class="card-title">App Calidad Estadística</div>
-                        <div class="card-desc">
-                            Web App con Flask y SQL para control estadístico de calidad. 
-                            Cálculo dinámico de índices Cp y Cpk para toma de decisiones.
-                        </div>
-                        <a href="trabajos/calidad.pdf" target="_blank" class="btn-pdf">
-                            <i class="fas fa-file-pdf"></i> Ver Documentación
-                        </a>
-                    </div>
-
-                    <div class="carousel-card">
-                        <i class="fas fa-cookie-bite card-icon" style="color: #8b5cf6;"></i>
-                        <div class="card-title">Evaluación Sensorial</div>
-                        <div class="card-desc">
-                            Plataforma web para evaluación de chocolate en la UNA Puno. 
-                            Integración de métodos estadísticos para optimizar procesos.
-                        </div>
-                        <a href="trabajos/chocolate.pdf" target="_blank" class="btn-pdf">
-                            <i class="fas fa-file-pdf"></i> Ver Documentación
-                        </a>
-                    </div>
-
                 </div>
+
+                <div class="project-card">
+                    <div class="card-preview" style="background: linear-gradient(45deg, #064e3b, #10b981);">
+                        <i class="fas fa-shield-alt preview-icon"></i>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">MailScannerX</div>
+                        <p class="card-text">
+                            Herramienta anti-spam desarrollada con JS y SQL. Reduce riesgos en un 20%.
+                        </p>
+                        <a href="trabajos/mailscanner.pdf" target="_blank" class="btn-download">
+                            <i class="fas fa-file-pdf"></i> Ver PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="card-preview" style="background: linear-gradient(45deg, #7c2d12, #f59e0b);">
+                        <i class="fas fa-chart-line preview-icon"></i>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Control de Calidad</div>
+                        <p class="card-text">
+                            App web (Flask) para análisis estadístico de procesos. Visualización de índices Cp y Cpk.
+                        </p>
+                        <a href="trabajos/calidad.pdf" target="_blank" class="btn-download">
+                            <i class="fas fa-file-pdf"></i> Ver PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="card-preview" style="background: linear-gradient(45deg, #4c1d95, #8b5cf6);">
+                        <i class="fas fa-cookie-bite preview-icon"></i>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Evaluación Sensorial</div>
+                        <p class="card-text">
+                            Plataforma para análisis de chocolate. Uso de algoritmos ML para datos sensoriales.
+                        </p>
+                        <a href="trabajos/chocolate.pdf" target="_blank" class="btn-download">
+                            <i class="fas fa-file-pdf"></i> Ver PDF
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </section>
 
         <section id="trayectoria">
-            <h2><i class="fas fa-history"></i> Experiencia y Educación</h2>
+            <h2 class="section-title"><i class="fas fa-history"></i> Trayectoria Profesional</h2>
             
-            <div class="timeline">
+            <div class="timeline-container">
                 
                 <div class="timeline-item">
-                    <div class="role">Investigador - Proyecto Chocolate</div>
-                    <span class="date">Marzo 2024 - Septiembre 2024 | UNA Puno</span>
-                    <p>Diseño de plataforma web y análisis de datos sensoriales con Machine Learning.</p>
+                    <div class="timeline-role">Investigador de Proyecto</div>
+                    <span class="timeline-date">Marzo 2024 - Septiembre 2024</span>
+                    <p class="timeline-desc">
+                        Universidad Nacional del Altiplano. Desarrollo de plataforma web y análisis de datos para evaluación sensorial de chocolate.
+                    </p>
                 </div>
 
                 <div class="timeline-item">
-                    <div class="role">Estudiante Ingeniería Estadística</div>
-                    <span class="date">2021 - Presente | UNA Puno</span>
-                    <p>Noveno Semestre. Beca Permanencia 2023 por alto rendimiento académico.</p>
+                    <div class="timeline-role">Desarrollador de Software</div>
+                    <span class="timeline-date">2023</span>
+                    <p class="timeline-desc">
+                        Creación de "HeartPrex" y "MailScannerX". Ambos softwares obtuvieron registro en INDECOPI por innovación tecnológica.
+                    </p>
                 </div>
 
                 <div class="timeline-item">
-                    <div class="role">Certificaciones Data Science</div>
-                    <span class="date">2023 - 2024</span>
-                    <p>Cursos completados en Machine Learning, Deep Learning y Python (Escuela Global, Data Academy).</p>
+                    <div class="timeline-role">Beca Permanencia</div>
+                    <span class="timeline-date">Junio 2023</span>
+                    <p class="timeline-desc">
+                        Otorgada por PRONABEC en reconocimiento al alto rendimiento académico (Décimo Superior) en Ingeniería Estadística.
+                    </p>
                 </div>
 
             </div>
-        </section>
-
-        <section id="contacto" style="border: none; text-align: center;">
-            <h2>Contáctame</h2>
-            <div style="font-size: 1.5rem; display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
-                <a href="mailto:wcarlosviza@est.unap.edu.pe" style="color: #94a3b8;"><i class="fas fa-envelope"></i></a>
-                <a href="https://linkedin.com" style="color: #0e76a8;"><i class="fab fa-linkedin"></i></a>
-                <a href="tel:+51904160294" style="color: #10b981;"><i class="fas fa-whatsapp"></i></a>
-            </div>
-            <p style="margin-top: 20px; color: #64748b;">Puno, Perú</p>
         </section>
 
     </div>
 
+    <footer>
+        <p>&copy; 2024 Wladimir Aldo Carlosviza Amanqui - Puno, Perú</p>
+    </footer>
+
+    <script>
+        // Script simple para cambiar la clase "active" en el navbar al hacer scroll
+        const sections = document.querySelectorAll("section");
+        const navLi = document.querySelectorAll("nav .nav-container a");
+
+        window.onscroll = () => {
+            var current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 150) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLi.forEach((a) => {
+                a.classList.remove("active");
+                if (a.getAttribute("href").includes(current)) {
+                    a.classList.add("active");
+                }
+            });
+        };
+    </script>
 </body>
 </html>
