@@ -10,14 +10,16 @@
     <style>
         /* --- 1. VARIABLES Y BASE --- */
         :root {
-            --bg-body: #09090b;       
-            --bg-card: #18181b;       
-            --primary: #3b82f6;       
+            --bg-body: #09090b;        
+            --bg-card: #18181b;        
+            --primary: #3b82f6;        
             --primary-glow: rgba(59, 130, 246, 0.5);
-            --secondary: #10b981;     
-            --text-main: #f4f4f5;     
-            --text-muted: #a1a1aa;    
-            --border-color: #27272a;  
+            --secondary: #10b981;       
+            --danger: #ef4444;
+            --neutral: #71717a;
+            --text-main: #f4f4f5;       
+            --text-muted: #a1a1aa;      
+            --border-color: #27272a;    
         }
 
         * {
@@ -38,7 +40,7 @@
             overflow-x: hidden;
         }
 
-        /* --- 2. NAVBAR (PESTAÑAS) --- */
+        /* --- 2. NAVBAR --- */
         nav {
             position: sticky;
             top: 20px;
@@ -86,7 +88,7 @@
             max-width: 1100px;
             margin: 0 auto;
             padding: 80px 20px;
-            overflow: hidden; /* Importante para el carrusel infinito */
+            overflow: hidden; 
         }
 
         section {
@@ -135,7 +137,7 @@
             margin-bottom: 20px; 
         }
         
-        .bio { color: var(--text-muted); max-width: 600px; margin: 0 auto 30px; font-size: 1.05rem; }
+        .bio { color: var(--text-muted); max-width: 700px; margin: 0 auto 30px; font-size: 1.05rem; }
 
         .social-icons a {
             color: var(--text-muted);
@@ -149,12 +151,21 @@
         /* --- 5. ANIMACIÓN TEXTO --- */
         .section-title {
             font-size: 2rem;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
             gap: 15px;
         }
         .section-title i { color: var(--primary); }
+
+        .unit-title {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin: 40px 0 20px 0;
+            padding-left: 10px;
+            border-left: 4px solid var(--secondary);
+            font-weight: 700;
+        }
 
         .typing-text {
             display: inline-block;
@@ -167,40 +178,45 @@
         @keyframes typing { from { width: 0 } to { width: 100%; } }
         @keyframes blink { 50% { border-color: transparent } }
 
-        /* --- 6. CARRUSEL AUTOMÁTICO (INFINITE MARQUEE) --- */
+        /* --- 6. CARRUSEL --- */
         
-        /* Contenedor que oculta lo que se sale de la pantalla */
         .carousel-view {
             overflow: hidden;
             width: 100%;
             position: relative;
+            margin-bottom: 60px;
         }
 
-        /* La pista que se mueve */
         .carousel-track {
             display: flex;
             gap: 30px;
-            width: max-content; /* Se ajusta al contenido total */
-            /* Animación: se mueve la mitad de su tamaño (porque duplicamos items) */
-            /* Ajusta '30s' para hacerlo más rápido o más lento */
-            animation: scroll 30s linear infinite; 
+            width: max-content; 
         }
 
-        /* Detener animación al pasar el mouse */
+        /* Animación Unidad 1 */
+        .track-u1 {
+            animation: scroll-u1 35s linear infinite; 
+        }
+        @keyframes scroll-u1 {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-2600px); } 
+        }
+
+        /* Animación Unidad 2 */
+        .track-u2 {
+            animation: scroll-u2 50s linear infinite; 
+        }
+        @keyframes scroll-u2 {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-4000px); } 
+        }
+
         .carousel-track:hover {
             animation-play-state: paused;
         }
 
-        /* Definición del movimiento */
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            /* Calculo: (Ancho Tarjeta 340px + Gap 30px) * 4 tarjetas originales = -1480px */
-            100% { transform: translateX(-1480px); } 
-        }
-
-        /* Tarjeta */
         .project-card {
-            flex: 0 0 340px; /* Ancho fijo */
+            flex: 0 0 340px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 24px;
@@ -214,16 +230,15 @@
             transform: translateY(-10px);
             border-color: var(--primary);
             box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.2);
-            z-index: 10; /* Que se superponga al hacer hover */
+            z-index: 10;
         }
 
-        /* PREVIEW PDF */
         .card-preview {
-            height: 220px; 
+            height: 200px; 
             width: 100%;
             position: relative;
             overflow: hidden; 
-            background-color: #eee; 
+            background-color: #27272a; 
             border-bottom: 1px solid var(--border-color);
         }
 
@@ -231,31 +246,20 @@
             width: 100%;
             height: 100%; 
             object-fit: cover;
-            pointer-events: none; /* TRUCO: Evita interacción para que el scroll funcione */
+            pointer-events: none; 
             transform: scale(1.05);
         }
 
-        .card-preview::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; width: 100%; height: 30%;
-            background: linear-gradient(to top, var(--bg-card), transparent);
-            pointer-events: none;
-        }
+        .card-content { padding: 20px; display: flex; flex-direction: column; height: 180px; justify-content: space-between; }
 
-        .card-content { padding: 25px; display: flex; flex-direction: column; }
-
+        .card-header { margin-bottom: 10px; }
+        
         .card-title {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            margin-bottom: 8px;
             color: white;
-        }
-
-        .card-text {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 20px;
+            margin-bottom: 5px;
+            line-height: 1.3;
         }
 
         .btn-download {
@@ -264,13 +268,13 @@
             justify-content: center;
             gap: 10px;
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             background: rgba(37, 99, 235, 0.1);
             border: 1px solid rgba(37, 99, 235, 0.2);
             color: var(--primary);
             text-decoration: none;
-            border-radius: 14px;
-            font-size: 0.95rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
             font-weight: 600;
             transition: 0.3s;
         }
@@ -317,7 +321,6 @@
         .timeline-date { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; display: inline-block; background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 6px;}
         .timeline-desc { color: var(--text-muted); font-size: 1rem; }
 
-        /* --- 8. FOOTER --- */
         footer {
             text-align: center;
             padding: 60px 20px;
@@ -328,9 +331,6 @@
         @media (max-width: 768px) {
             h1 { font-size: 2.2rem; }
             .nav-link { padding: 8px 16px; font-size: 0.85rem; }
-            .section-title { font-size: 1.5rem; }
-            .typing-text { animation: none; width: auto; border: none; white-space: normal; }
-            /* Ajuste animación móvil */
             .carousel-track { animation-duration: 20s; }
         }
     </style>
@@ -340,7 +340,7 @@
     <nav>
         <div class="nav-container">
             <a href="#sobre-mi" class="nav-link active">Sobre Mí</a>
-            <a href="#proyectos" class="nav-link">Entregables</a>
+            <a href="#proyectos" class="nav-link">Estadística Espacial</a>
             <a href="#trayectoria" class="nav-link">Trayectoria</a>
         </div>
     </nav>
@@ -348,148 +348,277 @@
     <div class="main-container">
 
         <section id="sobre-mi" class="profile-header">
-            <img src="https://via.placeholder.com/150" alt="Wladimir" class="profile-img">
-            <h1>Wladimir Aldo Carlosviza</h1>
-            <div class="role">Ingeniería Estadística e Informática | Data Science</div>
+            <img src="https://via.placeholder.com/150" alt="Wladimir Carlosviza" class="profile-img">
+            
+            <h1>Wladimir Aldo Carlosviza Amanqui</h1>
+            <div class="role">Ingeniería Estadística e Informática | Ciencia de Datos</div>
+            
             <p class="bio">
-                Estudiante de noveno semestre (Décimo Superior). Ganador de la Beca Permanencia 2023[cite: 11, 63]. 
-                Apasionado por transformar datos en soluciones innovadoras mediante Machine Learning y Desarrollo Web[cite: 6, 7].
+                Estudiante de noveno semestre (Décimo Superior), destacado por consistencia y excelencia académica en la Universidad Nacional del Altiplano. 
+                Ganador de la Beca Permanencia Pronabec (2023). 
+                Apasionado por aplicar habilidades en procesamiento de datos, programación (Python/R) y visualización para generar soluciones innovadoras.
             </p>
+            
             <div class="social-icons">
-                <a href="mailto:wcarlosviza@est.unap.edu.pe"><i class="fas fa-envelope"></i></a>
-                <a href="https://www.linkedin.com/in/wladimir-carlosviza-amanqui-237682213/"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:wcarlosviza@est.unap.edu.pe" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.linkedin.com/in/wladimir-carlosviza-amanqui-237682213/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
             </div>
         </section>
 
         <section id="proyectos">
             <div class="section-title">
-                <i class="fas fa-folder-open"></i>
-                <h2 class="typing-text">Entregables del Curso</h2>
+                <i class="fas fa-satellite-dish"></i>
+                <h2 class="typing-text">PORTAFOLIO: ESTADÍSTICA ESPACIAL</h2>
             </div>
-            <p style="color:var(--text-muted); margin-bottom:20px; font-size:0.9rem;">
-                <i class="fas fa-mouse"></i> Pasa el mouse sobre una tarjeta para detener el carrusel y descargar.
-            </p>
             
+            <h3 class="unit-title">UNIDAD I: Fundamentos y Herramientas</h3>
             <div class="carousel-view">
-                <div class="carousel-track">
+                <div class="carousel-track track-u1">
                     
                     <div class="project-card">
                         <div class="card-preview">
-                            <embed src="trabajos/heartprex.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                            <embed src="trabajos/u1_01_posicionamiento.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
                         </div>
                         <div class="card-content">
-                            <div class="card-title">HeartPrex AI</div>
-                            <p class="card-text">
-                                Software para detección de enfermedades cardíacas usando Machine Learning. Precisión del 85%. Registrado en INDECOPI[cite: 35, 36].
-                            </p>
-                            <a href="trabajos/heartprex.pdf" target="_blank" class="btn-download">
-                                <i class="fas fa-file-pdf"></i> Ver Documento
-                            </a>
+                            <div class="card-header">
+                                <div class="card-title">Posicionamiento de Información</div>
+                            </div>
+                            <a href="trabajos/u1_01_posicionamiento.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
                         </div>
                     </div>
 
                     <div class="project-card">
                         <div class="card-preview">
-                            <embed src="trabajos/mailscanner.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                            <embed src="trabajos/u1_02_bootstrap.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
                         </div>
                         <div class="card-content">
-                            <div class="card-title">MailScannerX</div>
-                            <p class="card-text">
-                                Herramienta anti-spam desarrollada con JavaScript y SQL. Optimización de gestión de emails en un 20%[cite: 41, 42].
-                            </p>
-                            <a href="trabajos/mailscanner.pdf" target="_blank" class="btn-download">
-                                <i class="fas fa-file-pdf"></i> Ver Documento
-                            </a>
+                            <div class="card-header">
+                                <div class="card-title">Ejemplo: Muestreo Bootstrap</div>
+                            </div>
+                            <a href="trabajos/u1_02_bootstrap.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
                         </div>
                     </div>
 
                     <div class="project-card">
                         <div class="card-preview">
-                            <embed src="trabajos/calidad.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                            <embed src="trabajos/u1_03_gaussian.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
                         </div>
                         <div class="card-content">
-                            <div class="card-title">Control de Calidad</div>
-                            <p class="card-text">
-                                App web (Flask) para análisis estadístico. Visualización de índices Cp y Cpk[cite: 28, 29].
-                            </p>
-                            <a href="trabajos/calidad.pdf" target="_blank" class="btn-download">
-                                <i class="fas fa-file-pdf"></i> Ver Documento
-                            </a>
+                            <div class="card-header">
+                                <div class="card-title">Gaussian Random Fields</div>
+                            </div>
+                            <a href="trabajos/u1_03_gaussian.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
                         </div>
                     </div>
 
                     <div class="project-card">
                         <div class="card-preview">
-                            <embed src="trabajos/chocolate.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                            <embed src="trabajos/u1_04_research.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
                         </div>
                         <div class="card-content">
-                            <div class="card-title">Evaluación Sensorial</div>
-                            <p class="card-text">
-                                Plataforma para análisis de chocolate. Uso de algoritmos ML para datos sensoriales[cite: 20, 21].
-                            </p>
-                            <a href="trabajos/chocolate.pdf" target="_blank" class="btn-download">
-                                <i class="fas fa-file-pdf"></i> Ver Documento
-                            </a>
+                            <div class="card-header">
+                                <div class="card-title">Research Statement [3 páginas]</div>
+                            </div>
+                            <a href="trabajos/u1_04_research.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
                         </div>
                     </div>
 
                     <div class="project-card">
                         <div class="card-preview">
-                            <embed src="trabajos/heartprex.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                            <embed src="trabajos/u1_05_github.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
                         </div>
                         <div class="card-content">
-                            <div class="card-title">HeartPrex AI</div>
-                            <p class="card-text">
-                                Software para detección de enfermedades cardíacas usando Machine Learning. Precisión del 85%. Registrado en INDECOPI[cite: 35, 36].
-                            </p>
-                            <a href="trabajos/heartprex.pdf" target="_blank" class="btn-download">
-                                <i class="fas fa-file-pdf"></i> Ver Documento
-                            </a>
+                            <div class="card-header">
+                                <div class="card-title">Repositorio de Github</div>
+                            </div>
+                            <a href="trabajos/u1_05_github.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
                         </div>
                     </div>
 
                     <div class="project-card">
                         <div class="card-preview">
-                            <embed src="trabajos/mailscanner.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                            <embed src="trabajos/u1_06_autocorrelacion.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
                         </div>
                         <div class="card-content">
-                            <div class="card-title">MailScannerX</div>
-                            <p class="card-text">
-                                Herramienta anti-spam desarrollada con JavaScript y SQL. Optimización de gestión de emails en un 20%[cite: 41, 42].
-                            </p>
-                            <a href="trabajos/mailscanner.pdf" target="_blank" class="btn-download">
-                                <i class="fas fa-file-pdf"></i> Ver Documento
-                            </a>
+                            <div class="card-header">
+                                <div class="card-title">Aplicación de Autocorrelación Espacial</div>
+                            </div>
+                            <a href="trabajos/u1_06_autocorrelacion.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
                         </div>
                     </div>
 
                     <div class="project-card">
                         <div class="card-preview">
-                            <embed src="trabajos/calidad.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                            <embed src="trabajos/u1_07_matrices.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
                         </div>
                         <div class="card-content">
-                            <div class="card-title">Control de Calidad</div>
-                            <p class="card-text">
-                                App web (Flask) para análisis estadístico. Visualización de índices Cp y Cpk[cite: 28, 29].
-                            </p>
-                            <a href="trabajos/calidad.pdf" target="_blank" class="btn-download">
-                                <i class="fas fa-file-pdf"></i> Ver Documento
-                            </a>
+                            <div class="card-header">
+                                <div class="card-title">Matrices de Pesos, Moran, Geary y Hotspots</div>
+                            </div>
+                            <a href="trabajos/u1_07_matrices.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
                         </div>
                     </div>
 
                     <div class="project-card">
                         <div class="card-preview">
-                            <embed src="trabajos/chocolate.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" class="pdf-embed" />
+                            <embed src="trabajos/u1_08_evidencia.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
                         </div>
                         <div class="card-content">
-                            <div class="card-title">Evaluación Sensorial</div>
-                            <p class="card-text">
-                                Plataforma para análisis de chocolate. Uso de algoritmos ML para datos sensoriales[cite: 20, 21].
-                            </p>
-                            <a href="trabajos/chocolate.pdf" target="_blank" class="btn-download">
-                                <i class="fas fa-file-pdf"></i> Ver Documento
-                            </a>
+                            <div class="card-header">
+                                <div class="card-title">Adjuntar Evidencia de Paper</div>
+                            </div>
+                            <a href="trabajos/u1_08_evidencia.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <h3 class="unit-title">UNIDAD II: Aplicaciones y Proyectos</h3>
+            <div class="carousel-view">
+                <div class="carousel-track track-u2">
+                    
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/u2_09_lectura.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-title">Resumen de Lectura</div>
+                            </div>
+                            <a href="trabajo/1.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/u2_10_qgis.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-title">Instalar QGIS</div>
+                            </div>
+                            <a href="trabajos/u2_10_qgis.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/u2_11_poligonos.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-title">Polígonos Puntos y Lineas</div>
+                            </div>
+                            <a href="trabajos/u2_11_poligonos.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/u2_12_puno.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-title">Puno - Conectividad</div>
+                            </div>
+                            <a href="trabajos/u2_12_puno.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/u2_13_problematica.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-title">Representación Problemática Nacional</div>
+                            </div>
+                            <a href="trabajos/u2_13_problematica.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/u2_14_intro.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-title">1. Introducción</div>
+                            </div>
+                            <a href="trabajos/u2_14_intro.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/u2_15_materiales.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-title">2. Materiales y Métodos</div>
+                            </div>
+                            <a href="trabajos/u2_15_materiales.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/u2_16_resultados.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-title">3. Resultados</div>
+                            </div>
+                            <a href="trabajos/u2_16_resultados.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/u2_17_discusion.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-title">4. Discusión y Conclusiones</div>
+                            </div>
+                            <a href="trabajos/u2_17_discusion.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/u2_18_paper.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-title">Paper Completo</div>
+                            </div>
+                            <a href="trabajos/u2_18_paper.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/u2_19_shapes.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-title">1. Shapes to Google Earth</div>
+                            </div>
+                            <a href="trabajos/u2_19_shapes.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="card-preview">
+                            <embed src="trabajos/u2_20_gee_apps.pdf#toolbar=0" type="application/pdf" class="pdf-embed" />
+                        </div>
+                        <div class="card-content">
+                            <div class="card-header">
+                                <div class="card-title">Aplicación Google Earth Engine</div>
+                            </div>
+                            <a href="trabajos/u2_20_gee_apps.pdf" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Ver Archivo</a>
                         </div>
                     </div>
 
@@ -504,38 +633,44 @@
             </div>
             
             <div class="timeline-container">
-                
                 <div class="timeline-item">
-                    <div class="timeline-role">Investigador de Proyecto</div>
+                    <div class="timeline-role">Investigador - Proyecto Evaluación Sensorial</div>
                     <span class="timeline-date">Marzo 2024 - Septiembre 2024</span>
                     <p class="timeline-desc">
-                        Universidad Nacional del Altiplano. Desarrollo de plataforma web y análisis de datos para evaluación sensorial de chocolate[cite: 16, 20].
+                        Universidad Nacional del Altiplano. Diseñé y desarrollé una plataforma web integrando métodos estadísticos y machine learning. Lideré la presentación de resultados.
                     </p>
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-role">Desarrollador de Software</div>
-                    <span class="timeline-date">2023</span>
-                    <p class="timeline-desc">
-                        Creación de "HeartPrex" y "MailScannerX". Ambos softwares obtuvieron registro en INDECOPI por innovación tecnológica[cite: 31, 37].
-                    </p>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-role">Beca Permanencia</div>
+                    <div class="timeline-role">Beca Permanencia - PRONABEC</div>
                     <span class="timeline-date">Junio 2023</span>
                     <p class="timeline-desc">
-                        Otorgada por PRONABEC en reconocimiento al alto rendimiento académico (Décimo Superior) en Ingeniería Estadística[cite: 11, 63].
+                        Otorgada por el alto rendimiento académico en la Facultad de Ingeniería Estadística e Informática (Décimo Superior).
                     </p>
                 </div>
 
+                <div class="timeline-item">
+                    <div class="timeline-role">Desarrollador de Software - HeartPrex & MailScannerX</div>
+                    <span class="timeline-date">2023</span>
+                    <p class="timeline-desc">
+                        Desarrollo y registro en INDECOPI de software innovador. "HeartPrex" para detección cardíaca y "MailScannerX" para seguridad digital.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-role">Estudiante de Ingeniería Estadística e Informática</div>
+                    <span class="timeline-date">Junio 2021 - Presente</span>
+                    <p class="timeline-desc">
+                        Universidad Nacional del Altiplano. Cursos relevantes: Análisis Estadístico, Ciencia de Datos, Programación en Python/R, Machine Learning.
+                    </p>
+                </div>
             </div>
         </section>
 
     </div>
 
     <footer>
-        <p>&copy; 2024 Wladimir Aldo Carlosviza Amanqui - Puno, Perú</p>
+        <p>&copy; 2025 Wladimir Aldo Carlosviza Amanqui - Puno, Perú</p>
     </footer>
 
     <script>
