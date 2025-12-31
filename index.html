@@ -10,13 +10,13 @@
     <style>
         /* --- 1. VARIABLES Y BASE --- */
         :root {
-            --bg-body: #09090b;       /* Fondo casi negro */
-            --bg-card: #18181b;       /* Fondo tarjetas */
-            --primary: #2563eb;       /* Azul brillante (Botón activo) */
-            --secondary: #10b981;     /* Verde (Trayectoria) */
-            --text-main: #e4e4e7;     /* Texto claro */
-            --text-muted: #a1a1aa;    /* Texto gris */
-            --border-color: #27272a;  /* Bordes sutiles */
+            --bg-body: #09090b;
+            --bg-card: #18181b;
+            --primary: #2563eb;
+            --secondary: #10b981;
+            --text-main: #e4e4e7;
+            --text-muted: #a1a1aa;
+            --border-color: #27272a;
         }
 
         * {
@@ -31,10 +31,11 @@
             background-color: var(--bg-body);
             color: var(--text-main);
             line-height: 1.6;
-            background-image: radial-gradient(circle at 50% 0%, #1e1b4b 0%, transparent 40%); /* Luz sutil arriba */
+            background-image: radial-gradient(circle at 50% 0%, #1e1b4b 0%, transparent 40%);
+            overflow-x: hidden; /* Evita scroll horizontal indeseado */
         }
 
-        /* --- 2. NAVBAR TIPO PESTAÑA (Ref Imagen 1) --- */
+        /* --- 2. NAVBAR TIPO PESTAÑA --- */
         nav {
             position: sticky;
             top: 20px;
@@ -46,7 +47,7 @@
 
         .nav-container {
             background: rgba(24, 24, 27, 0.8);
-            backdrop-filter: blur(10px); /* Efecto vidrio */
+            backdrop-filter: blur(10px);
             padding: 8px;
             border-radius: 50px;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -70,7 +71,6 @@
             background: rgba(255,255,255,0.05);
         }
 
-        /* ESTILO DEL BOTÓN ACTIVO (AZUL) */
         .nav-link.active {
             background-color: var(--primary);
             color: white;
@@ -78,7 +78,7 @@
             font-weight: 600;
         }
 
-        /* --- 3. CONTENEDOR PRINCIPAL --- */
+        /* --- 3. ESTRUCTURA --- */
         .main-container {
             max-width: 1000px;
             margin: 0 auto;
@@ -87,10 +87,10 @@
 
         section {
             margin-bottom: 100px;
-            padding-top: 20px; /* Offset para el scroll */
+            padding-top: 20px;
         }
 
-        /* --- 4. PERFIL / HERO --- */
+        /* --- 4. PERFIL --- */
         .profile-header {
             text-align: center;
         }
@@ -118,65 +118,88 @@
         }
         .social-icons a:hover { color: white; transform: translateY(-3px); display: inline-block; }
 
-        /* --- 5. CARRUSEL DE PROYECTOS (ESTILO TARJETA) --- */
-        /* Animación de fondo para la "Vista Previa" */
-        @keyframes gradient-move {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
+        /* --- 5. ANIMACIÓN DE ESCRITURA (TYPING) --- */
+        /* Contenedor para alinear icono y texto */
         .section-title {
             font-size: 1.8rem;
             margin-bottom: 40px;
             display: flex;
             align-items: center;
             gap: 12px;
+            flex-wrap: wrap; /* Para móviles */
         }
+        
         .section-title i { color: var(--primary); }
 
-        /* Contenedor Scroll Horizontal */
+        /* Efecto Typing CSS Puro */
+        .typing-text {
+            display: inline-block;
+            overflow: hidden; /* Oculta el texto hasta que se escribe */
+            border-right: 3px solid var(--primary); /* El cursor */
+            white-space: nowrap; /* Evita salto de línea */
+            margin: 0;
+            width: 0; /* Inicia en 0 */
+            /* Animación: escribir en 3s, parpadear cursor infinito */
+            animation: 
+                typing 3s steps(22) forwards, 
+                blink .75s step-end infinite;
+            max-width: 100%;
+        }
+
+        /* Keyframes para expandir el ancho */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 22ch; } /* 22 caracteres aprox para "Entregables del Curso" */
+        }
+
+        /* Keyframes para parpadeo del cursor */
+        @keyframes blink {
+            50% { border-color: transparent }
+        }
+
+
+        /* --- 6. CARRUSEL --- */
+        @keyframes gradient-move {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .carousel-container {
             display: flex;
             gap: 25px;
             overflow-x: auto;
-            padding: 20px 5px 40px 5px; /* Padding abajo para la sombra */
+            padding: 20px 5px 40px 5px;
             scroll-snap-type: x mandatory;
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none;
         }
-        .carousel-container::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+        .carousel-container::-webkit-scrollbar { display: none; }
 
-        /* DISEÑO DE LA TARJETA (CONTENEDOR ESTILIZADO) */
         .project-card {
-            flex: 0 0 300px; /* Ancho fijo */
+            flex: 0 0 300px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 20px;
             overflow: hidden;
             scroll-snap-align: center;
             transition: all 0.4s ease;
-            position: relative;
         }
 
-        /* Efecto Hover en la tarjeta */
         .project-card:hover {
             transform: translateY(-10px);
             border-color: var(--primary);
             box-shadow: 0 20px 40px -10px rgba(0,0,0,0.6);
         }
 
-        /* Vista Previa Animada (Parte superior de la tarjeta) */
         .card-preview {
             height: 160px;
             width: 100%;
-            /* Gradiente animado que simula movimiento */
             background: linear-gradient(-45deg, #1e1b4b, #312e81, #1e3a8a, #0f172a);
             background-size: 400% 400%;
             animation: gradient-move 10s ease infinite;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
         }
 
         .preview-icon {
@@ -186,9 +209,7 @@
             transition: transform 0.4s;
         }
         
-        .project-card:hover .preview-icon {
-            transform: scale(1.1);
-        }
+        .project-card:hover .preview-icon { transform: scale(1.1); }
 
         .card-content { padding: 25px; }
 
@@ -227,7 +248,7 @@
             box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
         }
 
-        /* --- 6. TRAYECTORIA (TIMELINE) (Ref Imagen 2) --- */
+        /* --- 7. TIMELINE --- */
         .timeline-container {
             padding-left: 20px;
             border-left: 2px solid #27272a;
@@ -239,41 +260,24 @@
             margin-bottom: 50px;
         }
 
-        /* El punto verde */
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -9px; /* Centrado en la línea */
+            left: -9px;
             top: 0;
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            background-color: var(--bg-body); /* Centro oscuro */
-            border: 4px solid var(--secondary); /* Borde verde */
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); /* Brillo verde */
+            background-color: var(--bg-body);
+            border: 4px solid var(--secondary);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
         }
 
-        .timeline-role {
-            color: var(--secondary);
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
+        .timeline-role { color: var(--secondary); font-size: 1.1rem; font-weight: 700; margin-bottom: 5px; }
+        .timeline-date { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; display: block; text-transform: uppercase; letter-spacing: 1px; }
+        .timeline-desc { color: var(--text-muted); }
 
-        .timeline-date {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            display: block;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .timeline-desc {
-            color: var(--text-muted);
-        }
-
-        /* --- 7. FOOTER --- */
+        /* --- 8. FOOTER --- */
         footer {
             text-align: center;
             padding: 40px;
@@ -282,11 +286,12 @@
             font-size: 0.9rem;
         }
 
-        /* Responsive */
         @media (max-width: 600px) {
             h1 { font-size: 2rem; }
             .nav-link { padding: 8px 15px; font-size: 0.8rem; }
             .project-card { flex: 0 0 85%; }
+            /* Ajuste de animación en móvil para que no se corte */
+            .typing-text { white-space: normal; border-right: none; width: auto; animation: none; }
         }
     </style>
 </head>
@@ -318,7 +323,10 @@
         </section>
 
         <section id="proyectos">
-            <h2 class="section-title"><i class="fas fa-folder-open"></i> Entregables del Curso</h2>
+            <h2 class="section-title">
+                <i class="fas fa-folder-open"></i>
+                <span class="typing-text">Entregables del Curso</span>
+            </h2>
             <p style="color:var(--text-muted); margin-bottom:20px; font-size:0.9rem;">
                 <i class="fas fa-hand-pointer"></i> Desliza horizontalmente para ver todos los trabajos.
             </p>
@@ -427,7 +435,6 @@
     </footer>
 
     <script>
-        // Script simple para cambiar la clase "active" en el navbar al hacer scroll
         const sections = document.querySelectorAll("section");
         const navLi = document.querySelectorAll("nav .nav-container a");
 
