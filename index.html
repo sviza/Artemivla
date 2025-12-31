@@ -3,224 +3,312 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Portafolio - Unidades</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    <title>CV - Wladimir Aldo Carlosviza Amanqui</title>
     <style>
-        /* ESTILOS PERSONALIZADOS */
+        /* --- RESET Y BASE --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            background-color: #1a1d21; /* Fondo oscuro como tu imagen */
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding-top: 80px; /* Espacio para que la barra no tape el contenido */
+            background-color: #0b1120; /* Fondo oscuro profundo (ref imagen 2) */
+            color: #94a3b8; /* Texto gris claro para lectura */
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
         }
 
-        /* BARRA DE NAVEGACIÓN (Pestañitas) */
-        .navbar {
-            background-color: #15171a !important; /* Color de fondo de la barra */
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        /* --- NAVBAR (Ref Imagen 1) --- */
+        nav {
+            background-color: #111827; /* Fondo un poco más claro que el body */
             padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #1f2937;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            align-items: center;
         }
 
-        .nav-pills .nav-link {
-            color: #adb5bd; /* Color de texto normal */
-            margin: 0 5px;
-            font-weight: 500;
+        .nav-item {
+            text-decoration: none;
+            color: #9ca3af;
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            transition: all 0.3s ease;
         }
 
-        .nav-pills .nav-link:hover {
+        .nav-item:hover {
             color: #fff;
         }
 
-        /* El botón azul activo (Como en tu foto) */
-        .nav-pills .nav-link.active {
-            background-color: #0d6efd; /* Azul brillante */
-            color: white;
+        /* Estilo del botón activo azul (Ref Imagen 1) */
+        .nav-item.active {
+            background-color: #2563eb; /* Azul intenso */
+            color: #ffffff;
             border-radius: 6px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.4);
         }
 
-        /* SECCIONES */
-        section {
-            padding: 60px 0;
-            min-height: 80vh; /* Para que ocupen buen espacio */
-        }
-
-        /* ESTILO DEL CARRUSEL (Tarjetas dentro del carrusel) */
-        .carousel-card {
-            background-color: #212529;
-            border: 1px solid #343a40;
-            border-radius: 15px;
-            padding: 40px;
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .container {
+            max-width: 900px;
             margin: 0 auto;
-            max-width: 600px; /* Ancho máximo de la tarjeta */
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            padding: 40px 20px;
         }
 
-        .carousel-control-prev-icon,
-        .carousel-control-next-icon {
-            filter: invert(1); /* Flechas visibles */
-            background-color: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            padding: 20px;
+        /* --- SECCIÓN SOBRE MÍ --- */
+        .header-section {
+            text-align: center;
+            margin-bottom: 60px;
         }
-        
-        /* Foto de perfil */
-        .profile-img {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 5px solid #0d6efd;
-            object-fit: cover;
+
+        h1 {
+            color: #f8fafc; /* Blanco casi puro */
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #38bdf8; /* Azul claro para el título profesional */
+            font-size: 1.2rem;
             margin-bottom: 20px;
         }
-        
-        .pdf-icon {
-            font-size: 3rem;
-            color: #e74c3c;
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-info span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .summary {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #cbd5e1;
+            text-align: justify;
+        }
+
+        /* --- TÍTULOS DE SECCIÓN --- */
+        h2 {
+            display: flex;
+            align-items: center;
+            color: #f1f5f9;
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            gap: 10px;
+        }
+
+        h2 i {
+            color: #cbd5e1; /* Icono gris */
+        }
+
+        /* --- TRAYECTORIA (TIMELINE - Ref Imagen 2) --- */
+        .timeline {
+            position: relative;
+            padding-left: 20px; /* Espacio para la línea */
+        }
+
+        /* La línea vertical */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            bottom: 0;
+            width: 2px;
+            background-color: #334155; /* Gris oscuro */
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            padding-left: 30px; /* Espacio entre línea y contenido */
+        }
+
+        /* El punto verde (Ref Imagen 2) */
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: -6px; /* Ajuste para centrar sobre la línea (width 12 / 2) */
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: #10b981; /* Verde esmeralda */
+            border: 3px solid #0b1120; /* Borde del color del fondo para "cortar" la línea */
+            box-shadow: 0 0 0 1px #10b981; /* Efecto de brillo sutil */
+        }
+
+        .timeline-header {
+            margin-bottom: 10px;
+        }
+
+        .role-title {
+            color: #34d399; /* Verde claro (texto título) */
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .date-location {
+            font-size: 0.85rem;
+            color: #64748b; /* Gris apagado para fechas */
             margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .description {
+            color: #94a3b8;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* --- HABILIDADES (TAGS) --- */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background-color: #1e293b;
+            color: #38bdf8;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid #334155;
+            transition: 0.3s;
+        }
+
+        .skill-tag:hover {
+            border-color: #38bdf8;
+            background-color: #0f172a;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .timeline { padding-left: 10px; }
+            .timeline-item { padding-left: 20px; }
+            nav { gap: 10px; font-size: 0.8rem; }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body data-bs-spy="scroll" data-bs-target="#navbar-example" data-bs-offset="100">
+<body>
 
-    <nav id="navbar-example" class="navbar navbar-expand-lg fixed-top navbar-dark">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#sobre-mi">Sobre Mí</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#unidad-1">Unidad I</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#unidad-2">Unidad II</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contacto">Contacto</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <nav>
+        <a href="#sobre-mi" class="nav-item active">Sobre Mí</a>
+        <a href="#trayectoria" class="nav-item">Trayectoria</a>
+        <a href="#educacion" class="nav-item">Educación</a>
+        <a href="#habilidades" class="nav-item">Habilidades</a>
     </nav>
 
-    <section id="sobre-mi" class="container text-center d-flex align-items-center justify-content-center">
-        <div>
-            <img src="https://via.placeholder.com/200" alt="Mi Foto" class="profile-img">
-            <h1 class="display-4 fw-bold">Hola, soy [Tu Nombre]</h1>
-            <p class="lead text-secondary">Estudiante de [Tu Carrera] | Universidad [Nombre]</p>
-            <p class="mt-4" style="max-width: 700px; margin: 0 auto;">
-                Bienvenido a mi portafolio digital. Aquí encontrarás todos los trabajos y asignaciones
-                realizados durante el curso, organizados por unidades de aprendizaje.
-            </p>
-        </div>
-    </section>
+    <div class="container">
+        
+        <section id="sobre-mi" class="header-section">
+            <h1>Wladimir Aldo Carlosviza Amanqui</h1> <div class="subtitle">Ingeniería Estadística e Informática (En curso)</div> <div class="contact-info">
+                <span><i class="fas fa-map-marker-alt"></i> Puno, Perú</span> <span><i class="fas fa-envelope"></i> wcarlosviza@est.unap.edu.pe</span> <span><i class="fas fa-phone"></i> +51 904 160 294</span> <span><i class="fab fa-linkedin"></i> LinkedIn</span> </div>
 
-    <section id="unidad-1" class="bg-dark">
-        <div class="container">
-            <h2 class="text-center mb-5 text-primary">Unidad I: Fundamentos</h2>
+            <p class="summary">
+                Estudiante de noveno semestre con experiencia en análisis estadístico, ciencia de datos y desarrollo de software.
+                Busco contribuir aplicando habilidades en procesamiento de datos y programación para optimizar soluciones y lograr resultados excepcionales. </p>
+        </section>
 
-            <div id="carouselUnidad1" class="carousel slide" data-bs-ride="false"> <div class="carousel-inner">
-
-                    <div class="carousel-item active">
-                        <div class="carousel-card">
-                            <i class="fas fa-file-pdf pdf-icon"></i>
-                            <h3>Investigación Inicial</h3>
-                            <p>Análisis de los conceptos básicos de la materia y resumen ejecutivo.</p>
-                            <a href="trabajos/tarea1.pdf" class="btn btn-primary mt-3" target="_blank">
-                                <i class="fas fa-download"></i> Ver Documento
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="carousel-item">
-                        <div class="carousel-card">
-                            <i class="fas fa-project-diagram pdf-icon" style="color: #2ecc71;"></i>
-                            <h3>Mapa Conceptual</h3>
-                            <p>Esquema visual sobre la arquitectura de sistemas.</p>
-                            <a href="trabajos/tarea2.pdf" class="btn btn-primary mt-3" target="_blank">
-                                <i class="fas fa-download"></i> Ver Documento
-                            </a>
-                        </div>
-                    </div>
-
-                    </div>
+        <section id="trayectoria">
+            <h2><i class="fas fa-history"></i> Trayectoria</h2>
+            
+            <div class="timeline">
                 
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselUnidad1" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselUnidad1" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <section id="unidad-2">
-        <div class="container">
-            <h2 class="text-center mb-5 text-info">Unidad II: Desarrollo</h2>
-
-            <div id="carouselUnidad2" class="carousel slide" data-bs-ride="false">
-                <div class="carousel-inner">
-
-                    <div class="carousel-item active">
-                        <div class="carousel-card">
-                            <i class="fas fa-code pdf-icon" style="color: #f1c40f;"></i>
-                            <h3>Proyecto Práctico</h3>
-                            <p>Código fuente y documentación del proyecto de medio curso.</p>
-                            <a href="trabajos/proyecto.pdf" class="btn btn-primary mt-3" target="_blank">
-                                <i class="fas fa-download"></i> Ver Documento
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="carousel-item">
-                        <div class="carousel-card">
-                            <i class="fas fa-file-alt pdf-icon"></i>
-                            <h3>Ensayo Final</h3>
-                            <p>Reflexión crítica sobre los resultados obtenidos.</p>
-                            <a href="trabajos/ensayo.pdf" class="btn btn-primary mt-3" target="_blank">
-                                <i class="fas fa-download"></i> Ver Documento
-                            </a>
-                        </div>
-                    </div>
-
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <div class="role-title">Investigador - Evaluación Sensorial</div> <div class="date-location">Marzo 2024 - Septiembre 2024 | UNA Puno</div> </div>
+                    <div class="description">
+                        Diseñé y desarrollé una plataforma web para la evaluación sensorial de barras de chocolate. 
+                        Implementé algoritmos de Machine Learning para analizar datos, mejorando la precisión de resultados en un 15% 
+                        y optimizando procesos en un 30%. </div>
                 </div>
-                
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselUnidad2" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselUnidad2" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                </button>
-            </div>
-        </div>
-    </section>
 
-    <section id="contacto" class="bg-dark text-center">
-        <div class="container">
-            <h2>Contacto</h2>
-            <p class="mb-4">Puedes contactarme a través de mis redes o correo institucional.</p>
-            
-            <div class="d-flex justify-content-center gap-4 fs-2">
-                <a href="mailto:tu@email.com" class="text-white"><i class="fas fa-envelope"></i></a>
-                <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
-                <a href="#" class="text-white"><i class="fab fa-github"></i></a>
-            </div>
-            
-            <footer class="mt-5 text-secondary fs-6">
-                &copy; 2024 Portafolio Universitario
-            </footer>
-        </div>
-    </section>
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <div class="role-title">Aplicación de Control Estadístico de Calidad</div> <div class="date-location">2024 | Proyecto Académico</div> </div>
+                    <div class="description">
+                        Desarrollé una aplicación web (Python/Flask, SQL, JS) para control de calidad. 
+                        Implementé visualizaciones dinámicas de KPIs e índices Cp/Cpk, reduciendo variaciones en la toma de decisiones un 10%. </div>
+                </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <div class="role-title">Desarrollador - Software "HeartPrex"</div> <div class="date-location">2023 | Reconocimiento INDECOPI</div> </div>
+                    <div class="description">
+                        Creé un software para la detección de enfermedades cardíacas utilizando algoritmos de Machine Learning en Python, 
+                        logrando una precisión del 85%. Software registrado en INDECOPI por innovación en salud. </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <div class="role-title">Desarrollador - Software "MailScannerX"</div> <div class="date-location">2023 | Reconocimiento INDECOPI</div> </div>
+                    <div class="description">
+                        Desarrollé una herramienta de análisis de correos no deseados (JavaScript, SQL), optimizando la gestión 
+                        de emails y reduciendo riesgos de spam en un 20%. Registrado en INDECOPI. </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="educacion">
+            <h2><i class="fas fa-graduation-cap"></i> Educación y Logros</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <div class="role-title">Ingeniería Estadística e Informática</div> <div class="date-location">2021 - Presente | Universidad Nacional del Altiplano</div> </div>
+                    <div class="description">
+                        Noveno semestre. Décimo superior de la carrera. 
+                        Ganador de la Beca Permanencia de Pronabec (2023) por alto rendimiento académico. </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <div class="role-title">Certificaciones Relevantes</div> <div class="date-location">2023 - 2024</div>
+                    </div>
+                    <div class="description">
+                        • Machine Learning para Ciencia de Datos (120 hrs) - Data & Analytics Academy.<br>
+                        • Inteligencia Artificial y Ciencia de Datos con Python y R (140 hrs) - Escuela Global.<br>
+                        • Excel Intermedio - Excel Total.<br>
+                        • Deep Learning + Machine Learning (35 hrs). </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="habilidades">
+            <h2><i class="fas fa-code"></i> Habilidades Técnicas</h2>
+            <div class="skills-grid">
+                <span class="skill-tag">Python (Flask, Pandas)</span>
+                <span class="skill-tag">R Studio</span>
+                <span class="skill-tag">SQL</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">Machine Learning</span>
+                <span class="skill-tag">Deep Learning</span>
+                <span class="skill-tag">Análisis Estadístico</span>
+                <span class="skill-tag">Power BI / Visualización</span>
+                <span class="skill-tag">Git / GitHub</span>
+            </div>
+        </section>
+
+    </div>
 </body>
 </html>
